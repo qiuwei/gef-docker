@@ -204,8 +204,8 @@ func (s *Server) listJobsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) executeServiceHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	imageID := dckr.ImageID(vars["imageID"])
+	r.ParseMultipartForm( 2 << 20);
+	imageID := dckr.ImageID(r.FormValue("imageID"))
 	image, err := s.docker.InspectImage(imageID)
 	if err != nil {
 		Response{w}.ServerError("executeServiceHandler: ", err)

@@ -144,6 +144,10 @@ func (c Client) IsValid() bool {
 // InspectImage returns the image stats
 func (c Client) InspectImage(id ImageID) (Image, error) {
 	img, err := c.c.InspectImage(string(id))
+	if err != nil {
+		log.Println("The ImageID is invalid!", err);
+		return
+	}
 	ret := Image{ID: ImageID(img.ID)}
 	if err != nil {
 		return ret, err
